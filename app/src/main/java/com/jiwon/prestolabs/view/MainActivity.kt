@@ -1,7 +1,8 @@
-package com.jiwon.prestolabs
+package com.jiwon.prestolabs.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.jiwon.prestolabs.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
