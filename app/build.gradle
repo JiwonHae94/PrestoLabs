@@ -2,6 +2,7 @@ import dependencies.WebSocket
 import dependencies.DI
 import dependencies.Gson
 import dependencies.UnitTest
+import dependencies.Ktx
 
 plugins {
     id 'com.android.application'
@@ -49,6 +50,7 @@ android {
 }
 
 dependencies {
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'
@@ -66,6 +68,11 @@ dependencies {
 
     testImplementation UnitTest.junit
     androidTestImplementation UnitTest.junit
+
+    //view model lifecycle -> coroutine
+    implementation Ktx.activity
+    implementation Ktx.fragment
+
 
     // test implementation
     testImplementation UnitTest.googleTruth

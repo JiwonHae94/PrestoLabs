@@ -4,6 +4,8 @@ import android.util.Log
 import okhttp3.*
 import okhttp3.WebSocket
 import okio.ByteString
+import org.json.JSONArray
+import org.json.JSONObject
 
 class WebSocket {
     val TAG = WebSocket::class.java.simpleName
@@ -47,14 +49,23 @@ class WebSocket {
             super.onOpen(webSocket, response)
 
             // TODO send subcription message
+            Log.d(TAG, "onOpen : ${response.body}")
+
+            val jsonObject = JSONObject()
+            jsonObject.put("op", "subscribe")
+            jsonObject.put("args", JSONArray(arrayOf(Subcription)))
+
+            webSocket.send(
+                jsonObject.toString()
+            )
         }
 
         override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
-            Log.d("Socket","Closed : $code / $reason")
+            Log.d(TAG,"Closed : $code / $reason")
         }
 
         override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
-            Log.d("Socket","Closing : $code / $reason")
+            Log.d(TAG,"Closing : $code / $reason")
             webSocket.close(NORMAL_CLOSURE_STATUS, null)
             webSocket.cancel()
         }
@@ -71,7 +82,7 @@ class WebSocket {
     }
 
     companion object{
-        const val WebSocketURL = "wss://ws.bitmex.com/realtime"
         const val Subcription = "instrument"
+        const val WebSocketURL = "wss://ws.bitmex.com/realtime"
     }
 }

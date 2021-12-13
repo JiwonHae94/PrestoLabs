@@ -18,6 +18,11 @@ object DI{
 }
 
 
+object Ktx {
+    const val activity = "androidx.activity:activity-ktx:1.1.0"
+    const val fragment = "androidx.fragment:fragment-ktx:1.3.5"
+}
+
 object Gson{
     private const val version = "2.8.9"
     const val api = "com.google.code.gson:gson:$version"
