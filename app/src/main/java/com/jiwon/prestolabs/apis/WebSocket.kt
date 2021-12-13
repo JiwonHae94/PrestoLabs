@@ -16,7 +16,7 @@ class WebSocket {
         .build()
 
     fun openConnection(
-        onMessageReceived : () -> Unit
+        onMessageReceived : (String) -> Unit
     ){
         client.newWebSocket(request, SocketListener(onMessageReceived))
     }
@@ -27,7 +27,7 @@ class WebSocket {
 
 
     class SocketListener(
-        onMessageReceived : () -> Unit
+        onMessageReceived : (String) -> Unit
     ) : WebSocketListener(){
         private val TAG = WebSocket::class.java.simpleName
 
