@@ -1,6 +1,8 @@
 package com.jiwon.prestolabs.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.GsonBuilder
 import com.jiwon.prestolabs.api.WebSocket
