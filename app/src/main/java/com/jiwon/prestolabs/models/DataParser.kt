@@ -16,7 +16,7 @@ class InstrumentParser : JsonDeserializer<Instrument?> {
         context: JsonDeserializationContext
     ): Instrument? {
         // convert json as JSONObject
-        val jsonObject = json.asJsonObject.getAsJsonObject("data")
+        val jsonObject = json.asJsonObject
 
         // get parse information from the data and instatiate an instrument class
         return try{
@@ -26,7 +26,7 @@ class InstrumentParser : JsonDeserializer<Instrument?> {
                 state = InstrumentState.get(jsonObject.get(State).asString) ?: InstrumentState.Closed
             )
         }catch(e: JSONException){
-            Log.e(TAG, "failed to parse Instrument due to ${e.localizedMessage}")
+            Log.e(TAG, "failed to parse Instrument due to ${json} ${e.localizedMessage}")
             null
         }
     }
@@ -34,7 +34,7 @@ class InstrumentParser : JsonDeserializer<Instrument?> {
     companion object{
         private const val Symbol = "symbol"
         private const val IsInverse = "isInverse"
-        private const val State = "State"
+        private const val State = "state"
     }
 }
 
@@ -48,20 +48,38 @@ class InstrumentUpdateParser : JsonDeserializer<InstrumentUpdate?>{
         context: JsonDeserializationContext?
     ): InstrumentUpdate? {
         // convert json as JSONObject
-        val jsonObject = json.asJsonObject.getAsJsonObject("data")
+        val jsonObject = json.asJsonObject
 
         // get parse information from the data and instatiate an instrument class
         return try{
             InstrumentUpdate(
-                symbol = jsonObject.get(Symbol).asString,
-                lastChangePercentage = jsonObject.get(LastChangePercent).asDouble
+                symbol = jsonObject.get(Symbol).asString
             ).apply{
+                if(jsonObject.has(LastChangePercent)){
+                    this.lastChangePercentage = try{
+                        jsonObject.get(LastChangePercent).asDouble
+                    }catch(e: Exception){
+                        Log.e(TAG, "failed to parse last change percentage : " + e.stackTraceToString())
+                        0.0
+                    }
+                }
+
                 if(jsonObject.has(LastPrice)){
-                    this.lastPrice = jsonObject.get(LastPrice).asInt
+                    this.lastPrice = try{
+                        jsonObject.get(LastPrice).asInt
+                    }catch(e: Exception){
+                        Log.e(TAG, "failed to parse last price : " + e.stackTraceToString())
+                        0
+                    }
                 }
 
                 if(jsonObject.has(Volume24h)){
-                    this.volume24 = jsonObject.get(Volume24h).asInt
+                    this.volume24 = try{
+                        jsonObject.get(Volume24h).asInt
+                    }catch(e: Exception){
+                        Log.e(TAG, "failed to parse volume 24 : " + e.stackTraceToString())
+                        0
+                    }
                 }
             }
 

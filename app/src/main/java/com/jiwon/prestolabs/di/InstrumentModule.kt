@@ -1,6 +1,6 @@
 package com.jiwon.prestolabs.di
 
-import com.jiwon.prestolabs.apis.WebSocket
+import com.jiwon.prestolabs.api.WebSocket
 import com.jiwon.prestolabs.viewmodel.InstrumentViewModel
 import dagger.Module
 import dagger.Provides
