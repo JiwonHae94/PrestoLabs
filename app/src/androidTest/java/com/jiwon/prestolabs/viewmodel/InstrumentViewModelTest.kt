@@ -1,7 +1,6 @@
 package com.jiwon.prestolabs.viewmodel
 
 import android.util.Log
-import org.junit.Assert.*
 import org.junit.Rule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -17,7 +16,7 @@ class InstrumentViewModelTest{
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
-    lateinit var viewmodel : InstrumentViewModel
+    lateinit var viewmodel : MainViewModel
 
     @Before
     fun setup(){

@@ -1,4 +1,4 @@
-package com.jiwon.prestolabs.apis
+package com.jiwon.prestolabs.api
 
 import android.util.Log
 import okhttp3.*
@@ -27,9 +27,8 @@ class WebSocket {
         client.dispatcher.executorService.shutdown()
     }
 
-
     class SocketListener(
-        onMessageReceived : (String) -> Unit
+        val onMessageReceived : (String) -> Unit
     ) : WebSocketListener(){
         private val TAG = WebSocket::class.java.simpleName
 
@@ -37,12 +36,14 @@ class WebSocket {
             super.onMessage(webSocket, text)
 
             Log.d(TAG, "Message : $text")
+            onMessageReceived(text)
         }
 
         override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
             super.onMessage(webSocket, bytes)
 
             Log.d(TAG, "Message : $bytes")
+            onMessageReceived(bytes.toString())
         }
 
         override fun onOpen(webSocket: WebSocket, response: Response) {
@@ -53,7 +54,7 @@ class WebSocket {
 
             val jsonObject = JSONObject()
             jsonObject.put("op", "subscribe")
-            jsonObject.put("args", JSONArray(arrayOf(Subcription)))
+            jsonObject.put("args", JSONArray(arrayOf(Subscription)))
 
             webSocket.send(
                 jsonObject.toString()
@@ -82,7 +83,7 @@ class WebSocket {
     }
 
     companion object{
-        const val Subcription = "instrument"
+        const val Subscription = "instrument"
         const val WebSocketURL = "wss://ws.bitmex.com/realtime"
     }
 }

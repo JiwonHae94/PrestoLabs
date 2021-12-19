@@ -1,22 +1,31 @@
 package com.jiwon.prestolabs.viewmodel
 
-import androidx.lifecycle.ViewModel
-import com.jiwon.prestolabs.apis.WebSocket
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
+import com.jiwon.prestolabs.model.InstrumentHashMap
 
-@HiltViewModel
-class InstrumentViewModel @Inject constructor(
-    val webSocket : WebSocket
-) : ViewModel() {
-    fun connectSocket(){
-        webSocket.openConnection(::onSocketMessageReceived)
-    }
+class InstrumentViewModel : BaseObservable() {
+    private var currentClickCount : Int = 0
 
-    fun onSocketMessageReceived(
-        msg : String
-    ) : String{
-        // TODO handle socket message
-        return msg
-    }
+    private var clickCount : Int
+        @Bindable get(){
+            return currentClickCount
+        }
+        set(value){
+            currentClickCount = value
+        }
+
+    private var _currentSorting = InstrumentHashMap.Sorting.PriceAscending
+
+    var currentSorting : InstrumentHashMap.Sorting
+        @Bindable get(){
+            return currentSorting
+        }
+        set(value){
+            // set the value
+            _currentSorting = value
+
+            // notifies ui for two way binding
+            //notifyPropertyChanged()
+        }
 }
