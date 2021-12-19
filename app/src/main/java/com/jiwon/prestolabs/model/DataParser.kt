@@ -1,4 +1,4 @@
-package com.jiwon.prestolabs.models
+package com.jiwon.prestolabs.model
 
 import android.util.Log
 import com.google.gson.JsonDeserializationContext

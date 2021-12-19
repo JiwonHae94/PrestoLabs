@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     override fun onDestroy() {
         super.onDestroy()
 
-
         lifecycleRegistry.currentState = Lifecycle.State.DESTROYED
     }
 }

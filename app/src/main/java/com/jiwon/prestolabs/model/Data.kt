@@ -1,4 +1,4 @@
-package com.jiwon.prestolabs.models
+package com.jiwon.prestolabs.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -13,6 +13,32 @@ data class Instrument(
 ){
     override fun toString(): String {
         return "symbol : $symbol, state : $state, isInverse : ${isInverse}"
+    }
+
+    companion object{
+        fun CompareByLastPrice(
+            var1 : Instrument?,
+            var2 : Instrument?
+        ) : Int{
+            return when{
+                (var1 == null && var2 == null) -> 0
+                (var1 == null) -> -1
+                (var2 == null) -> 1
+                else -> var1.lastPrice.compareTo(var2.lastPrice)
+            }
+        }
+
+        fun CompareByLastChangedPercentage(
+            var1 : Instrument?,
+            var2 : Instrument?
+        ) : Int{
+            return when{
+                (var1 == null && var2 == null) -> 0
+                (var1 == null) -> -1
+                (var2 == null) -> 1
+                else -> var1.lastChangePercentage.compareTo(var2.lastChangePercentage)
+            }
+        }
     }
 }
 
