@@ -65,4 +65,29 @@ class InstrumentRepository {
         }
     }
 
+    companion object{
+        fun getDummyData() = InstrumentHashMap().apply{
+            put(Instrument(symbol = "A", state = InstrumentState.Open, lastPrice = 0, isInverse = false, lastChangePercentage = 100.0, volume24 = 0))
+            put(Instrument(symbol = "B", state = InstrumentState.Open, lastPrice = 2, isInverse = true, lastChangePercentage = -99.0, volume24 = 0))
+            put(Instrument(symbol = "C", state = InstrumentState.Open, lastPrice = 3, isInverse = false, lastChangePercentage = 98.0, volume24 = 0))
+            put(Instrument(symbol = "D", state = InstrumentState.Open, lastPrice = 4, isInverse = false, lastChangePercentage = -97.0, volume24 = 0))
+            put(Instrument(symbol = "E", state = InstrumentState.Open, lastPrice = 5, isInverse = true, lastChangePercentage = 96.0, volume24 = 0))
+            put(Instrument(symbol = "F", state = InstrumentState.Open, lastPrice = 6, isInverse = false, lastChangePercentage = 95.0, volume24 = 0))
+            put(Instrument(symbol = "G", state = InstrumentState.Open, lastPrice = 7, isInverse = false, lastChangePercentage = -94.0, volume24 = 0))
+            put(Instrument(symbol = "H", state = InstrumentState.Open, lastPrice = 8, isInverse = false, lastChangePercentage = 93.0, volume24 = 0))
+            put(Instrument(symbol = "I", state = InstrumentState.Open, lastPrice = 8, isInverse = false, lastChangePercentage = -93.0, volume24 = 0))
+            put(Instrument(symbol = "J", state = InstrumentState.Open, lastPrice = 8, isInverse = false, lastChangePercentage = -93.0, volume24 = 0))
+            put(Instrument(symbol = "K", state = InstrumentState.Open, lastPrice = 8, isInverse = false, lastChangePercentage = 93.0, volume24 = 0))
+            put(Instrument(symbol = "L", state = InstrumentState.Open, lastPrice = 8, isInverse = false, lastChangePercentage = -93.0, volume24 = 0))
+            put(Instrument(symbol = "M", state = InstrumentState.Open, lastPrice = 8, isInverse = false, lastChangePercentage = -93.0, volume24 = 0))
+            put(Instrument(symbol = "N", state = InstrumentState.Open, lastPrice = 8, isInverse = true, lastChangePercentage = -93.0, volume24 = 0))
+            put(Instrument(symbol = "O", state = InstrumentState.Open, lastPrice = 8, isInverse = false, lastChangePercentage = 93.0, volume24 = 0))
+            put(Instrument(symbol = "P", state = InstrumentState.Open, lastPrice = 8, isInverse = false, lastChangePercentage = 93.0, volume24 = 0))
+            put(Instrument(symbol = "Q", state = InstrumentState.Open, lastPrice = 8, isInverse = false, lastChangePercentage = 93.0, volume24 = 0))
+            put(Instrument(symbol = "R", state = InstrumentState.Open, lastPrice = 8, isInverse = false, lastChangePercentage = -93.0, volume24 = 0))
+            put(Instrument(symbol = "S", state = InstrumentState.Open, lastPrice = 8, isInverse = false, lastChangePercentage = 93.0, volume24 = 0))
+            put(Instrument(symbol = "T", state = InstrumentState.Open, lastPrice = 8, isInverse = false, lastChangePercentage = 93.0, volume24 = 0))
+        }
+    }
+
 }

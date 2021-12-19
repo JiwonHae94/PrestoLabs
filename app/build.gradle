@@ -3,6 +3,7 @@ import dependencies.DI
 import dependencies.Gson
 import dependencies.UnitTest
 import dependencies.Ktx
+import dependencies.Fragment
 
 plugins {
     id 'com.android.application'
@@ -68,6 +69,11 @@ dependencies {
 
     testImplementation UnitTest.junit
     androidTestImplementation UnitTest.junit
+
+    // fragment
+    implementation Fragment.api
+    implementation Fragment.kotlinAPI
+
 
     //view model lifecycle -> coroutine
     implementation Ktx.activity

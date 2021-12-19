@@ -1,10 +1,16 @@
 package dependencies
 
-object Dependency {
+object Fragment{
+
+    private const val version = "1.4.0"
+
+    // Java language implementation
+    const val api = "androidx.fragment:fragment:$version"
+    // Kotlin
+    const val kotlinAPI = "androidx.fragment:fragment-ktx:$version"
 }
 
 object DI{
-
     object Hilt{
         private const val version = "2.38.1"
         const val classpath = "com.google.dagger:hilt-android-gradle-plugin:$version"

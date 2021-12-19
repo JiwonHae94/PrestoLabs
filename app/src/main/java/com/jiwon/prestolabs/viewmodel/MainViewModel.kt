@@ -23,6 +23,10 @@ class MainViewModel @Inject constructor(
 
         }
     }
+    
+    fun connectSocket(){
+        repository.startSocket()
+    }
 
     override fun onCleared() {
         super.onCleared()
@@ -31,7 +35,6 @@ class MainViewModel @Inject constructor(
     }
 
     init{
-        repository.startSocket()
         instruments.updateOnMapChangedCallback(OnMapUpdated)
     }
 
