@@ -2,11 +2,9 @@ package com.jiwon.prestolabs.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.jiwon.prestolabs.R
 import com.jiwon.prestolabs.databinding.ActivityMainBinding
-import com.jiwon.prestolabs.viewmodel.InstrumentViewModel
+import com.jiwon.prestolabs.viewmodel.MainViewModel
 import androidx.activity.viewModels
-import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
@@ -21,7 +19,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     // UI binding to reference binding
     private lateinit var binding : ActivityMainBinding
 
-    private val viewmodel : InstrumentViewModel by viewModels()
+    private val viewmodel : MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,10 +28,10 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         lifecycleRegistry = LifecycleRegistry(this)
         lifecycleRegistry.currentState = Lifecycle.State.CREATED
-
-        binding.testBtn.setOnClickListener {
-            viewmodel.connectSocket()
-        }
+//
+//        binding.testBtn.setOnClickListener {
+//            viewmodel.connectSocket()
+//        }
     }
 
     override fun getLifecycle(): Lifecycle {

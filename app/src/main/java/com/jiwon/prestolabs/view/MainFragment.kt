@@ -2,14 +2,11 @@ package com.jiwon.prestolabs.view
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.lifecycleScope
-import com.jiwon.prestolabs.viewmodel.InstrumentViewModel
-import kotlinx.coroutines.launch
+import com.jiwon.prestolabs.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {
-    private val viewmodel : InstrumentViewModel by activityViewModels()
+    private val viewmodel : MainViewModel by activityViewModels()
 
     init {
         lifecycleScope.launchWhenStarted {
