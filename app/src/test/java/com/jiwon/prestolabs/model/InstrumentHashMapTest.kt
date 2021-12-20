@@ -12,14 +12,14 @@ class InstrumentHashMapTest{
     )
 
     val testData = InstrumentHashMap().apply{
-        add(Instrument(symbol = "A", state = InstrumentState.Open, lastPrice = 0, isInverse = true, lastChangePercentage = 100.0, volume24 = 0))
-        add(Instrument(symbol = "B", state = InstrumentState.Open, lastPrice = 2, isInverse = true, lastChangePercentage = 99.0, volume24 = 0))
-        add(Instrument(symbol = "C", state = InstrumentState.Open, lastPrice = 3, isInverse = true, lastChangePercentage = 98.0, volume24 = 0))
-        add(Instrument(symbol = "D", state = InstrumentState.Open, lastPrice = 4, isInverse = true, lastChangePercentage = 97.0, volume24 = 0))
-        add(Instrument(symbol = "E", state = InstrumentState.Open, lastPrice = 5, isInverse = true, lastChangePercentage = 96.0, volume24 = 0))
-        add(Instrument(symbol = "F", state = InstrumentState.Open, lastPrice = 6, isInverse = true, lastChangePercentage = 95.0, volume24 = 0))
-        add(Instrument(symbol = "G", state = InstrumentState.Open, lastPrice = 7, isInverse = true, lastChangePercentage = 94.0, volume24 = 0))
-        add(Instrument(symbol = "H", state = InstrumentState.Open, lastPrice = 8, isInverse = true, lastChangePercentage = 93.0, volume24 = 0))
+        put(Instrument(symbol = "A", state = InstrumentState.Open, lastPrice = 0, isInverse = true, lastChangePercentage = 100.0, volume24 = 0))
+        put(Instrument(symbol = "B", state = InstrumentState.Open, lastPrice = 2, isInverse = true, lastChangePercentage = -99.0, volume24 = 0))
+        put(Instrument(symbol = "C", state = InstrumentState.Open, lastPrice = 3, isInverse = true, lastChangePercentage = 98.0, volume24 = 0))
+        put(Instrument(symbol = "D", state = InstrumentState.Open, lastPrice = 4, isInverse = true, lastChangePercentage = -97.0, volume24 = 0))
+        put(Instrument(symbol = "E", state = InstrumentState.Open, lastPrice = 5, isInverse = true, lastChangePercentage = 96.0, volume24 = 0))
+        put(Instrument(symbol = "F", state = InstrumentState.Open, lastPrice = 6, isInverse = true, lastChangePercentage = -95.0, volume24 = 0))
+        put(Instrument(symbol = "G", state = InstrumentState.Open, lastPrice = 7, isInverse = true, lastChangePercentage = 94.0, volume24 = 0))
+        put(Instrument(symbol = "H", state = InstrumentState.Open, lastPrice = 8, isInverse = true, lastChangePercentage = -93.0, volume24 = 0))
     }
 
     @Test

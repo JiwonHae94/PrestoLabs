@@ -1,10 +1,13 @@
 package com.jiwon.prestolabs.viewmodel
 
 import androidx.databinding.ObservableMap
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jiwon.prestolabs.BR
 import com.jiwon.prestolabs.model.Instrument
-import com.jiwon.prestolabs.model.InstrumentHashMap
+import com.jiwon.prestolabs.model.InstrumentHashMap.Sorting
+import com.jiwon.prestolabs.model.sortedMapBy
 import com.jiwon.prestolabs.repository.InstrumentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import okhttp3.internal.notify
@@ -23,6 +26,10 @@ class MainViewModel @Inject constructor(
 
         }
     }
+    
+    fun connectSocket(){
+        repository.startSocket()
+    }
 
     override fun onCleared() {
         super.onCleared()
@@ -31,7 +38,6 @@ class MainViewModel @Inject constructor(
     }
 
     init{
-        repository.startSocket()
         instruments.updateOnMapChangedCallback(OnMapUpdated)
     }
 

@@ -3,6 +3,8 @@ import dependencies.DI
 import dependencies.Gson
 import dependencies.UnitTest
 import dependencies.Ktx
+import dependencies.Fragment
+import dependencies.Image
 
 plugins {
     id 'com.android.application'
@@ -69,6 +71,11 @@ dependencies {
     testImplementation UnitTest.junit
     androidTestImplementation UnitTest.junit
 
+    // fragment
+    implementation Fragment.api
+    implementation Fragment.kotlinAPI
+
+
     //view model lifecycle -> coroutine
     implementation Ktx.activity
     implementation Ktx.fragment
@@ -88,12 +95,15 @@ dependencies {
     implementation DI.Hilt.api
     kapt DI.Hilt.kapt
 
+    // Coil
+    implementation Image.Coil
+    implementation Image.CoilExtension
 
     // Gson
     implementation Gson.api
 
     // Websocket
-    implementation WebSocket.api
+    implementation WebSocket.Api
 
 
 }

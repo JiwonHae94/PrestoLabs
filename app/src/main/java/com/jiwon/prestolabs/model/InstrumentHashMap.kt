@@ -11,8 +11,8 @@ class InstrumentHashMap(
 ) : ObservableMap<String, Instrument> {
     
     enum class Sorting(val comparator : (Instrument, Instrument) -> Int,) {
-        PriceAscending(::CompareByLastPrice),
         PriceDescending(::CompareByLastPrice),
+        PriceAscending(::CompareByLastPrice),
         ChangeAscending(::CompareByLastChangedPercentage),
         ChangeDescending(::CompareByLastChangedPercentage)
     }
@@ -154,9 +154,9 @@ fun InstrumentHashMap.sortedMapBy(
     reverse : Boolean = false
 ) : List<Instrument>{
     return if(reverse){
-        values.sortedWith(selector).reversed()
+        values.sortedWith(selector).reversed().filter { !it.isInverse && it.state == InstrumentState.Open}
     }else{
-        values.sortedWith(selector)
+        values.sortedWith(selector).filter { !it.isInverse && it.state == InstrumentState.Open}
     }
 }
 
