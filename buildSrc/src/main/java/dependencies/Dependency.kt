@@ -36,9 +36,16 @@ object Gson{
 
 object WebSocket{
     private const val version = "4.9.0"
-    const val api = "com.squareup.okhttp3:okhttp:$version"
+    const val Api = "com.squareup.okhttp3:okhttp:$version"
 }
 
+object Image{
+    private const val CoilVersion = "1.4.0"
+    const val Coil = "io.coil-kt:coil:$CoilVersion"
+
+    // Coil extension is used to load gif to the image
+    const val CoilExtension = "io.coil-kt:coil-gif:$CoilVersion"
+}
 
 object UnitTest{
     private const val truthVersion = "1.1.3"

@@ -35,14 +35,14 @@ class WebSocket {
         override fun onMessage(webSocket: WebSocket, text: String) {
             super.onMessage(webSocket, text)
 
-            Log.d(TAG, "Message : $text")
+            //Log.i(TAG, "Message : $text")
             onMessageReceived(text)
         }
 
         override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
             super.onMessage(webSocket, bytes)
 
-            Log.d(TAG, "Message : $bytes")
+            //Log.i(TAG, "Message : $bytes")
             onMessageReceived(bytes.toString())
         }
 
@@ -50,7 +50,7 @@ class WebSocket {
             super.onOpen(webSocket, response)
 
             // TODO send subcription message
-            Log.d(TAG, "onOpen : ${response.body}")
+            //Log.i(TAG, "onOpen : ${response.body}")
 
             val jsonObject = JSONObject()
             jsonObject.put("op", "subscribe")
@@ -62,11 +62,11 @@ class WebSocket {
         }
 
         override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
-            Log.d(TAG,"Closed : $code / $reason")
+            Log.i(TAG,"Closed : $code / $reason")
         }
 
         override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
-            Log.d(TAG,"Closing : $code / $reason")
+            Log.i(TAG,"Closing : $code / $reason")
             webSocket.close(NORMAL_CLOSURE_STATUS, null)
             webSocket.cancel()
         }

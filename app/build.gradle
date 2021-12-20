@@ -4,6 +4,7 @@ import dependencies.Gson
 import dependencies.UnitTest
 import dependencies.Ktx
 import dependencies.Fragment
+import dependencies.Image
 
 plugins {
     id 'com.android.application'
@@ -94,12 +95,15 @@ dependencies {
     implementation DI.Hilt.api
     kapt DI.Hilt.kapt
 
+    // Coil
+    implementation Image.Coil
+    implementation Image.CoilExtension
 
     // Gson
     implementation Gson.api
 
     // Websocket
-    implementation WebSocket.api
+    implementation WebSocket.Api
 
 
 }

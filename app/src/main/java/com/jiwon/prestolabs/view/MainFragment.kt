@@ -35,15 +35,17 @@ class MainFragment : Fragment(R.layout.main_fragment) {
 
         // binds xml to the MainFragmentBinding
         binding = MainFragmentBinding.inflate(inflater)
+        binding.instruments = viewmodel.instruments
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.instrumentList.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
-        binding.instrumentList.adapter = InstrumentAdapter(InstrumentRepository.getDummyData().sortedMapBy(::CompareByLastPrice))
-        binding.instrumentList.addItemDecoration(DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
+        val layoutManager = LinearLayoutManager(view.context)
+        binding.instrumentList.layoutManager = layoutManager
+        binding.instrumentList.adapter = InstrumentAdapter()
+        binding.instrumentList.addItemDecoration(DividerItemDecoration(view.context, layoutManager.orientation))
         binding.instrumentList.setHasFixedSize(true)
     }
 }

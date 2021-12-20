@@ -11,8 +11,8 @@ class InstrumentHashMap(
 ) : ObservableMap<String, Instrument> {
     
     enum class Sorting(val comparator : (Instrument, Instrument) -> Int,) {
-        PriceAscending(::CompareByLastPrice),
         PriceDescending(::CompareByLastPrice),
+        PriceAscending(::CompareByLastPrice),
         ChangeAscending(::CompareByLastChangedPercentage),
         ChangeDescending(::CompareByLastChangedPercentage)
     }

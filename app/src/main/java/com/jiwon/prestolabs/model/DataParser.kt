@@ -59,7 +59,7 @@ class InstrumentUpdateParser : JsonDeserializer<InstrumentUpdate?>{
                     this.lastChangePercentage = try{
                         jsonObject.get(LastChangePercent).asDouble
                     }catch(e: Exception){
-                        Log.w(TAG, "failed to parse last change percentage : " + e.stackTraceToString())
+                        Log.w(TAG, "failed to parse last change percentage : " + jsonObject)
                         0.0
                     }
                 }
@@ -68,16 +68,16 @@ class InstrumentUpdateParser : JsonDeserializer<InstrumentUpdate?>{
                     this.lastPrice = try{
                         jsonObject.get(LastPrice).asInt
                     }catch(e: Exception){
-                        Log.w(TAG, "failed to parse last price : " + e.stackTraceToString())
+                        Log.w(TAG, "failed to parse last price : " + jsonObject)
                         0
                     }
                 }
 
                 if(jsonObject.has(Volume24h)){
                     this.volume24 = try{
-                        jsonObject.get(Volume24h).asInt
+                        jsonObject.get(Volume24h).asLong
                     }catch(e: Exception){
-                        Log.w(TAG, "failed to parse volume 24 : " + e.stackTraceToString())
+                        Log.w(TAG, "failed to parse volume 24 : " + jsonObject)
                         0
                     }
                 }
