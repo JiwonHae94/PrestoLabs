@@ -43,6 +43,9 @@ class InstrumentRepository {
             // parse string into instrument update class
             val instrumentUpdate = gsonDecoder.fromJson(array.getString(index), InstrumentUpdate::class.java)
 
+            // Log.d
+            Log.i(TAG, "update : ${instrumentUpdate}")
+
             // add updates to the list
             updateList.add(instrumentUpdate)
         }

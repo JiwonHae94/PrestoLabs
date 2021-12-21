@@ -1,10 +1,19 @@
 package com.jiwon.prestolabs.model
 
 import androidx.databinding.*
-import com.jiwon.prestolabs.model.Instrument.Companion.CompareByLastChangedPercentage
-import com.jiwon.prestolabs.model.Instrument.Companion.CompareByLastPrice
 
 class InstrumentMap : HashMap<String, Instrument>(), ObservableMap<String, Instrument> {
+    enum class Sorting{
+        PriceDecending,
+        PriceAscending,
+        ChangeAsending,
+        ChangeDesencding,
+        SymbolAscending,
+        SymbolDecending,
+        VolumeAscending,
+        VolumeDeceding
+    }
+
     private val mapChangeRegistry = MapChangeRegistry()
 
     override fun addOnMapChangedCallback(callback: ObservableMap.OnMapChangedCallback<out ObservableMap<String, Instrument>, String, Instrument>?) {
@@ -29,6 +38,7 @@ class InstrumentMap : HashMap<String, Instrument>(), ObservableMap<String, Instr
 
     override fun put(key: String?, value: Instrument): Instrument? {
         key?: return null
+        if(value.state != InstrumentState.Open || value.isInverse) return null
 
         val value = super.put(key, value)
         notifyChange(value?.symbol?.get())

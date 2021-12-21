@@ -14,7 +14,7 @@ class Instrument(
     @Bindable @SerializedName("volume24h") var volume24 : ObservableLong = ObservableLong(0)
 ) : BaseObservable() {
     override fun toString(): String {
-        return "symbol : ${symbol.get()}, state : $state, isInverse : ${isInverse}, lastPrice : ${lastPrice.get()}, volume24 : ${volume24.get()}"
+        return "symbol : ${symbol.get()}, state : $state, isInverse : ${isInverse}, lastPrice : ${lastPrice.get()}, lastChange : ${lastChangePercentage.get()} volume24 : ${volume24.get()}"
     }
 
     companion object{
@@ -47,6 +47,17 @@ class Instrument(
                     (var1 == null) -> -1
                     (var2 == null) -> 1
                     else -> var1.lastChangePercentage.get().compareTo(var2.lastChangePercentage.get())
+                }
+            }
+        }
+
+        val Volume24Compator : Comparator<Instrument> = object : Comparator<Instrument>{
+            override fun compare(var1: Instrument?, var2: Instrument?): Int {
+                return when{
+                    (var1 == null && var2 == null) -> 0
+                    (var1 == null) -> -1
+                    (var2 == null) -> 1
+                    else -> var1.volume24.get().compareTo(var2.volume24.get())
                 }
             }
         }

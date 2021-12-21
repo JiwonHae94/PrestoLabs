@@ -11,17 +11,65 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
-import com.jiwon.prestolabs.R
 import com.jiwon.prestolabs.databinding.InstrumentItemViewBinding
 import com.jiwon.prestolabs.databinding.InstrumentLoadingViewBinding
 import com.jiwon.prestolabs.model.Instrument
 import com.jiwon.prestolabs.model.InstrumentMap
-import com.jiwon.prestolabs.model.InstrumentState
 import java.text.DecimalFormat
 
 class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.ViewHolder>(){
-    private var instruments : List<Instrument> = emptyList()
+    private var instruments : Array<Instrument> = emptyArray()
     abstract class ViewHolder(view : View) : RecyclerView.ViewHolder(view)
+
+    // default comparator is SymbolComparator that orders instrument according to their symbol
+    private var currentComparator = Instrument.SymbolComparator
+    private var isReverse = false
+
+    fun updateCompator(sorting : InstrumentMap.Sorting){
+        // update current comparator
+        currentComparator = when(sorting){
+            InstrumentMap.Sorting.PriceAscending -> {
+                isReverse = false
+                Instrument.PriceComparator
+            }
+            InstrumentMap.Sorting.PriceDecending -> {
+                isReverse = true
+                Instrument.PriceComparator
+            }
+            InstrumentMap.Sorting.ChangeAsending -> {
+                isReverse = false
+                Instrument.PercentageChangeCompator
+            }
+            InstrumentMap.Sorting.ChangeDesencding -> {
+                isReverse = true
+                Instrument.PercentageChangeCompator
+            }
+            InstrumentMap.Sorting.VolumeAscending -> {
+                isReverse = false
+                Instrument.Volume24Compator
+            }
+            InstrumentMap.Sorting.VolumeDeceding -> {
+                isReverse = true
+                Instrument.Volume24Compator
+            }
+
+            InstrumentMap.Sorting.SymbolAscending -> {
+                isReverse = false
+                Instrument.SymbolComparator
+            }
+            InstrumentMap.Sorting.SymbolDecending -> {
+                isReverse = true
+                Instrument.SymbolComparator
+            }
+        }
+
+        this.instruments = instruments.sortedWith(currentComparator).toTypedArray()
+        if(isReverse)
+            instruments.reverse()
+
+        notifyDataSetChanged()
+    }
+
 
     class LoadingViewHolder(
         private val parent: ViewGroup,
@@ -76,9 +124,10 @@ class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.ViewHolder>(){
 
     fun update(items : Array<Instrument>){
 
-        synchronized(this){
-            // set target instruments
-            this.instruments = items.filter{ !it.isInverse && it.state == InstrumentState.Open}.sortedBy { it.symbol.get() }
+        // set target instruments
+        this.instruments = items.sortedWith(currentComparator).toTypedArray()
+        if(isReverse){
+            instruments.reverse()
         }
 
         // notify adapter of the update
@@ -90,11 +139,12 @@ class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.ViewHolder>(){
         private const val InstrumentLoading = 0
         private const val InstrumentLoaded = 1
 
-        private val volumeFormat = DecimalFormat("#.00M")
-        private val decimalFormat = DecimalFormat("#.##")
+        private val volumeFormat = DecimalFormat("###,###.00M")
+        private val decimalFormat = DecimalFormat("#.##%")
+        private val thousandFormat = DecimalFormat("###,###.########")
 
         private fun formatVolume(value : Long) : String{
-            return if(value < 1000000) value.toString()
+            return if(value < 1000000) thousandFormat.format(value)
             else volumeFormat.format(value.toBigDecimal().movePointLeft(6))
         }
 
@@ -107,7 +157,18 @@ class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.ViewHolder>(){
         @JvmStatic
         @BindingAdapter("bind:changePercent")
         fun bindChangePercent(view: TextView, var1 : Double){
-            view.text = decimalFormat.format(var1)
+            var sign = if(var1 > 0.0){
+                "+"
+            } else {
+                ""
+            }
+            view.text = sign + decimalFormat.format(var1)
+        }
+
+        @JvmStatic
+        @BindingAdapter("bind:price")
+        fun bindPrice(view : TextView, var1 : Double){
+            view.text = thousandFormat.format(var1)
         }
 
 

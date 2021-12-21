@@ -5,7 +5,6 @@
     xmlns:bind ="http://schemas.android.com/apk/tools">
 
     <data>
-
         <variable
             name="main_viewmodel"
             type="com.jiwon.prestolabs.viewmodel.MainViewModel" />
@@ -22,7 +21,7 @@
 
         <TextView
             android:id="@+id/symbols_title"
-            android:layout_height="wrap_content"
+            android:layout_height="100sp"
             android:layout_width="0dp"
             android:textColor="@android:color/darker_gray"
             android:text="Symbols : "
@@ -46,6 +45,7 @@
             app:layout_constraintBottom_toBottomOf="@id/symbols_title"/>
 
         <TextView
+            android:id="@+id/volume_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center_vertical|right"
