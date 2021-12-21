@@ -2,6 +2,7 @@ package com.jiwon.prestolabs.model
 
 import androidx.databinding.*
 import com.google.gson.annotations.SerializedName
+import java.util.Comparator
 
 class Instrument(
     // Symbol is the key
@@ -17,27 +18,36 @@ class Instrument(
     }
 
     companion object{
-        fun CompareByLastPrice(
-            var1 : Instrument?,
-            var2 : Instrument?
-        ) : Int{
-            return when{
-                (var1 == null && var2 == null) -> 0
-                (var1 == null) -> -1
-                (var2 == null) -> 1
-                else -> var1.lastPrice.get().compareTo(var2.lastPrice.get())
+        val SymbolComparator : Comparator<Instrument> = object : Comparator<Instrument>{
+            override fun compare(var1: Instrument?, var2: Instrument?): Int {
+                return when{
+                    (var1 == null && var2 == null) -> 0
+                    (var1 == null) -> -1
+                    (var2 == null) -> 1
+                    else -> var1.symbol.get()!!.compareTo(var2.symbol.get()!!)
+                }
             }
         }
 
-        fun CompareByLastChangedPercentage(
-            var1 : Instrument?,
-            var2 : Instrument?
-        ) : Int{
-            return when{
-                (var1 == null && var2 == null) -> 0
-                (var1 == null) -> -1
-                (var2 == null) -> 1
-                else -> var1.lastChangePercentage.get().compareTo(var2.lastChangePercentage.get())
+        val PriceComparator : Comparator<Instrument> = object : Comparator<Instrument>{
+            override fun compare(var1: Instrument?, var2: Instrument?): Int {
+                return when{
+                    (var1 == null && var2 == null) -> 0
+                    (var1 == null) -> -1
+                    (var2 == null) -> 1
+                    else -> var1.lastPrice.get().compareTo(var2.lastPrice.get())
+                }
+            }
+        }
+
+        val PercentageChangeCompator : Comparator<Instrument> = object : Comparator<Instrument>{
+            override fun compare(var1: Instrument?, var2: Instrument?): Int {
+                return when{
+                    (var1 == null && var2 == null) -> 0
+                    (var1 == null) -> -1
+                    (var2 == null) -> 1
+                    else -> var1.lastChangePercentage.get().compareTo(var2.lastChangePercentage.get())
+                }
             }
         }
     }
