@@ -1,6 +1,8 @@
 package com.jiwon.prestolabs.model
 
 import android.util.Log
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
@@ -21,8 +23,8 @@ class InstrumentParser : JsonDeserializer<Instrument?> {
         // get parse information from the data and instatiate an instrument class
         return try{
             Instrument(
-                symbol = jsonObject.get(Symbol).asString,
-                isInverse =  jsonObject.get(IsInverse).asBoolean,
+                symbol = ObservableField(jsonObject.get(Symbol).asString),
+                isInverse = jsonObject.get(IsInverse).asBoolean,
                 state = InstrumentState.get(jsonObject.get(State).asString) ?: InstrumentState.Closed
             )
         }catch(e: JSONException){
@@ -60,7 +62,7 @@ class InstrumentUpdateParser : JsonDeserializer<InstrumentUpdate?>{
                         jsonObject.get(LastChangePercent).asDouble
                     }catch(e: Exception){
                         Log.w(TAG, "failed to parse last change percentage : " + jsonObject)
-                        0.0
+                        null
                     }
                 }
 
@@ -69,7 +71,7 @@ class InstrumentUpdateParser : JsonDeserializer<InstrumentUpdate?>{
                         jsonObject.get(LastPrice).asInt
                     }catch(e: Exception){
                         Log.w(TAG, "failed to parse last price : " + jsonObject)
-                        0
+                        null
                     }
                 }
 
@@ -78,7 +80,7 @@ class InstrumentUpdateParser : JsonDeserializer<InstrumentUpdate?>{
                         jsonObject.get(Volume24h).asLong
                     }catch(e: Exception){
                         Log.w(TAG, "failed to parse volume 24 : " + jsonObject)
-                        0
+                        null
                     }
                 }
             }

@@ -1,18 +1,19 @@
 package com.jiwon.prestolabs.model
 
+import androidx.databinding.*
 import com.google.gson.annotations.SerializedName
 
-data class Instrument(
+class Instrument(
     // Symbol is the key
-    @SerializedName("symbol") val symbol : String,
-    @SerializedName("state") var state : InstrumentState,
-    @SerializedName("isInverse") var isInverse : Boolean,
-    @SerializedName("lastPrice") var lastPrice : Int = 0,
-    @SerializedName("lastChangePcnt") var lastChangePercentage : Double = 0.0,
-    @SerializedName("volume24h") var volume24 : Long = 0
-){
+    @Bindable @SerializedName("symbol") val symbol : ObservableField<String>,
+    @Bindable @SerializedName("state") var state : InstrumentState,
+    @Bindable @SerializedName("isInverse") var isInverse : Boolean = false,
+    @Bindable @SerializedName("lastPrice") var lastPrice : ObservableInt = ObservableInt(0),
+    @Bindable @SerializedName("lastChangePcnt") var lastChangePercentage : ObservableDouble = ObservableDouble(0.0),
+    @Bindable @SerializedName("volume24h") var volume24 : ObservableLong = ObservableLong(0)
+) : BaseObservable() {
     override fun toString(): String {
-        return "symbol : $symbol, state : $state, isInverse : ${isInverse}"
+        return "symbol : ${symbol.get()}, state : $state, isInverse : ${isInverse}, lastPrice : ${lastPrice.get()}, volume24 : ${volume24.get()}"
     }
 
     companion object{
@@ -24,7 +25,7 @@ data class Instrument(
                 (var1 == null && var2 == null) -> 0
                 (var1 == null) -> -1
                 (var2 == null) -> 1
-                else -> var1.lastPrice.compareTo(var2.lastPrice)
+                else -> var1.lastPrice.get().compareTo(var2.lastPrice.get())
             }
         }
 
@@ -36,7 +37,7 @@ data class Instrument(
                 (var1 == null && var2 == null) -> 0
                 (var1 == null) -> -1
                 (var2 == null) -> 1
-                else -> var1.lastChangePercentage.compareTo(var2.lastChangePercentage)
+                else -> var1.lastChangePercentage.get().compareTo(var2.lastChangePercentage.get())
             }
         }
     }
@@ -45,9 +46,9 @@ data class Instrument(
 data class InstrumentUpdate(
     // Symbol is the key
     @SerializedName("symbol") val symbol : String,
-    @SerializedName("lastPrice") var lastPrice : Int = 0,
-    @SerializedName("lastChangePcnt") var lastChangePercentage : Double = 0.0,
-    @SerializedName("volume24h") var volume24 : Long = 0
+    @SerializedName("lastPrice") var lastPrice : Int? = null,
+    @SerializedName("lastChangePcnt") var lastChangePercentage : Double? = null,
+    @SerializedName("volume24h") var volume24 : Long? = null
 ){
     override fun toString(): String {
         return "symbol : $symbol, lastprice : $lastPrice, lastChangePercentage : ${lastChangePercentage} volume24 : $volume24"

@@ -7,18 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
-import coil.load
 import com.jiwon.prestolabs.R
 import com.jiwon.prestolabs.databinding.InstrumentItemViewBinding
 import com.jiwon.prestolabs.databinding.InstrumentLoadingViewBinding
 import com.jiwon.prestolabs.model.Instrument
-import com.jiwon.prestolabs.model.InstrumentHashMap
-import com.jiwon.prestolabs.model.sortedMapBy
+import com.jiwon.prestolabs.model.InstrumentMap
+import com.jiwon.prestolabs.model.InstrumentState
 import java.text.DecimalFormat
 
 class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.ViewHolder>(){
@@ -30,7 +28,6 @@ class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.ViewHolder>(){
         private val binding : InstrumentLoadingViewBinding = InstrumentLoadingViewBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
     ) : ViewHolder(binding.root){
-
         val imageLoader = ImageLoader.Builder(parent.context)
             .componentRegistry {
                 if (Build.VERSION.SDK_INT >= 28) {
@@ -40,12 +37,6 @@ class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.ViewHolder>(){
                 }
             }
             .build()
-
-        init{
-            // apply loading gif to the imageview
-            binding.instrumentLoadingImage.load(R.drawable.loading_gif_icons8, imageLoader)
-        }
-
     }
 
     class ItemViewHolder(
@@ -79,15 +70,25 @@ class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.ViewHolder>(){
         return instruments.size
     }
 
-    fun update(items : List<Instrument>){
-        this.instruments = items
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    fun update(items : Array<Instrument>){
+
+        synchronized(this){
+            // set target instruments
+            this.instruments = items.filter{ !it.isInverse && it.state == InstrumentState.Open}.sortedBy { it.symbol.get() }
+        }
+
+        // notify adapter of the update
         notifyDataSetChanged()
+
     }
 
     companion object{
         private const val InstrumentLoading = 0
         private const val InstrumentLoaded = 1
-
 
         private val volumeFormat = DecimalFormat("#.00M")
         private val decimalFormat = DecimalFormat("#.##")
@@ -109,12 +110,12 @@ class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.ViewHolder>(){
             view.text = decimalFormat.format(var1)
         }
 
+
         @JvmStatic
-        @BindingAdapter("bind:instruments")
-        fun bindRecyclerView(view : RecyclerView, items : InstrumentHashMap){
+        @BindingAdapter("bind:items")
+        fun bindRecyclerView(view : RecyclerView, items : InstrumentMap){
             val adapter = view.adapter as InstrumentAdapter
-            Log.d("Test Binding Adapter", "items : ${items.keys}")
-            adapter.update(items.values.toList())
+            adapter.update(items.values.toTypedArray().clone())
         }
     }
 

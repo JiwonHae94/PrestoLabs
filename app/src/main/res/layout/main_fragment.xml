@@ -5,18 +5,15 @@
     xmlns:bind ="http://schemas.android.com/apk/tools">
 
     <data>
-        <variable
-            name="viewmodel"
-            type="com.jiwon.prestolabs.viewmodel.InstrumentViewModel" />
 
         <variable
             name="main_viewmodel"
             type="com.jiwon.prestolabs.viewmodel.MainViewModel" />
 
-        <import type="com.jiwon.prestolabs.model.InstrumentHashMap" />
+        <import type="com.jiwon.prestolabs.model.InstrumentMap" />
         <variable
             name="instruments"
-            type="InstrumentHashMap" />
+            type="InstrumentMap" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -65,7 +62,7 @@
             android:id="@+id/instrument_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            bind:instruments="@{instruments}"
+            bind:items="@{instruments}"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintWidth_percent="0.9"

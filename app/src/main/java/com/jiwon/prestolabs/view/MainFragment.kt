@@ -11,9 +11,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jiwon.prestolabs.R
 import com.jiwon.prestolabs.databinding.MainFragmentBinding
-import com.jiwon.prestolabs.model.Instrument.Companion.CompareByLastPrice
-import com.jiwon.prestolabs.model.sortedMapBy
-import com.jiwon.prestolabs.repository.InstrumentRepository
 import com.jiwon.prestolabs.view.adapter.InstrumentAdapter
 import com.jiwon.prestolabs.viewmodel.MainViewModel
 
@@ -35,7 +32,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
 
         // binds xml to the MainFragmentBinding
         binding = MainFragmentBinding.inflate(inflater)
-        binding.instruments = viewmodel.instruments
+        binding.instruments = viewmodel.observableInstruments
         return binding.root
     }
 
@@ -44,7 +41,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
 
         val layoutManager = LinearLayoutManager(view.context)
         binding.instrumentList.layoutManager = layoutManager
-        binding.instrumentList.adapter = InstrumentAdapter()
+        binding.instrumentList.adapter = InstrumentAdapter().apply{ setHasStableIds(true) }
         binding.instrumentList.addItemDecoration(DividerItemDecoration(view.context, layoutManager.orientation))
         binding.instrumentList.setHasFixedSize(true)
     }

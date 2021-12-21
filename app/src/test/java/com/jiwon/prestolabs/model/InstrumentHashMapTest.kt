@@ -1,7 +1,6 @@
 package com.jiwon.prestolabs.model
 
 import com.jiwon.prestolabs.model.Instrument.Companion.CompareByLastPrice
-import org.junit.Assert.*
 import org.junit.Test
 import com.google.common.truth.Truth.assertThat
 import com.jiwon.prestolabs.model.Instrument.Companion.CompareByLastChangedPercentage
@@ -11,7 +10,7 @@ class InstrumentHashMapTest{
         "A", "B", "C", "D", "E", "F", "G", "H"
     )
 
-    val testData = InstrumentHashMap().apply{
+    val testData = InstrumentMap().apply{
         put(Instrument(symbol = "A", state = InstrumentState.Open, lastPrice = 0, isInverse = true, lastChangePercentage = 100.0, volume24 = 0))
         put(Instrument(symbol = "B", state = InstrumentState.Open, lastPrice = 2, isInverse = true, lastChangePercentage = -99.0, volume24 = 0))
         put(Instrument(symbol = "C", state = InstrumentState.Open, lastPrice = 3, isInverse = true, lastChangePercentage = 98.0, volume24 = 0))
