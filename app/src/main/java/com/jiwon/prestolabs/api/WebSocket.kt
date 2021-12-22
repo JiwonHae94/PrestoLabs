@@ -35,23 +35,21 @@ class WebSocket {
         override fun onMessage(webSocket: WebSocket, text: String) {
             super.onMessage(webSocket, text)
 
-            //Log.i(TAG, "Message : $text")
+            // return msg received for parsing
             onMessageReceived(text)
         }
 
         override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
             super.onMessage(webSocket, bytes)
 
-            //Log.i(TAG, "Message : $bytes")
+            // return msg received for parsing
             onMessageReceived(bytes.toString())
         }
 
         override fun onOpen(webSocket: WebSocket, response: Response) {
             super.onOpen(webSocket, response)
 
-            // TODO send subcription message
-            //Log.i(TAG, "onOpen : ${response.body}")
-
+            // send subscription message back to the socket upon connection
             val jsonObject = JSONObject()
             jsonObject.put("op", "subscribe")
             jsonObject.put("args", JSONArray(arrayOf(Subscription)))

@@ -34,6 +34,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         binding = MainFragmentBinding.inflate(inflater)
         binding.instruments = viewmodel.observableInstruments
         binding.viewmodel = viewmodel
+        binding.lifecycleOwner = this
         return binding.root
     }
 

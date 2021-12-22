@@ -10,6 +10,7 @@
             type="com.jiwon.prestolabs.viewmodel.MainViewModel" />
 
         <import type="com.jiwon.prestolabs.model.InstrumentMap" />
+        <import type="com.jiwon.prestolabs.model.InstrumentMap.Sorting" />
         <variable
             name="instruments"
             type="InstrumentMap" />
@@ -19,65 +20,80 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
+            style="@style/Theme.PrestoLabs.SortButton"
             android:id="@+id/symbols_sort"
-            android:layout_height="100sp"
-            android:layout_width="0dp"
-            android:textColor="@android:color/darker_gray"
-            android:text="Symbols : "
+            android:layout_height="0dp"
+            android:layout_width="wrap_content"
+            android:textColor="@{(viewmodel.currentSorting == Sorting.SymbolAscending || viewmodel.currentSorting == Sorting.SymbolDescending) ?  @color/black : @color/ltgray }"
+            android:text="Symbols"
             android:onClick="@{() -> viewmodel.sortBySymbol()}"
-            android:gravity="center_vertical|left"
-            android:singleLine="true"
-            app:layout_constraintWidth_percent="0.4"
+            app:icon="@{(viewmodel.currentSorting == Sorting.SymbolAscending) ? @drawable/icon_sort_ascending : ((viewmodel.currentSorting == Sorting.SymbolDescending) ? @drawable/icon_sort_descending : @drawable/icon_sort_default)}"
+            app:layout_constraintHeight_percent="0.07"
             app:layout_constraintLeft_toLeftOf="@id/instrument_list"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <LinearLayout
             android:id="@+id/layout_price_percent_change"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:orientation="horizontal"
             android:gravity="center"
-            app:layout_constraintWidth_percent="0.3"
-            app:layout_constraintLeft_toRightOf="@id/symbols_sort"
+            app:layout_constraintLeft_toLeftOf="@id/symbols_sort"
+            app:layout_constraintRight_toRightOf="parent"
+            app:flow_horizontalBias="0.5"
             app:layout_constraintTop_toTopOf="@id/symbols_sort"
             app:layout_constraintBottom_toBottomOf="@id/symbols_sort">
 
-            <TextView
+            <com.google.android.material.button.MaterialButton
+                style="@style/Theme.PrestoLabs.SortButton"
                 android:id="@+id/price_sort"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/darker_gray"
-                android:gravity="center_vertical|right"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:text="Price"
-                android:layout_weight="1"
-                android:onClick="@{() -> viewmodel.sortByPrice()}"
-                android:singleLine="true"/>
+                android:textSize="10sp"
+                android:textColor="@{(viewmodel.currentSorting == Sorting.PriceAscending || viewmodel.currentSorting == Sorting.PriceDescending) ? @color/black : @color/ltgray }"
+                android:onClick="@{() -> viewmodel.sortByPrice()}"/>
 
             <TextView
-                android:id="@+id/percent_change_sort"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/darker_gray"
-                android:gravity="center_vertical|right"
-                android:text="Change"
-                android:onClick="@{() -> viewmodel.sortByPercentChange()}"
-                android:singleLine="true"
-                android:layout_weight="1"/>
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text=" / "/>
 
+            <com.google.android.material.button.MaterialButton
+                style="@style/Theme.PrestoLabs.SortButton"
+                android:id="@+id/percent_change_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@{(viewmodel.currentSorting == Sorting.PercentChangeAscending || viewmodel.currentSorting == Sorting.PercentChangeDescending) ?  @color/black : @color/ltgray }"
+                android:text="Change"
+                android:onClick="@{() -> viewmodel.sortByPercentChange()}"/>
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Theme.PrestoLabs.SortButton"
+                android:text=""
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:enabled="false"
+                android:clickable="false"
+                app:iconGravity="start"
+                app:icon="@{viewmodel.currentSorting == Sorting.PercentChangeAscending || viewmodel.currentSorting == Sorting.PriceAscending ? @drawable/icon_sort_ascending : viewmodel.currentSorting == Sorting.PercentChangeDescending || viewmodel.currentSorting == Sorting.PriceDescending ? @drawable/icon_sort_descending : @drawable/icon_sort_default}"/>
         </LinearLayout>
 
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
+            style="@style/Theme.PrestoLabs.SortButton"
             android:id="@+id/volume_sort"
-            android:layout_width="0dp"
+            android:backgroundTint="@null"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:gravity="center_vertical|right"
-            android:textColor="@android:color/darker_gray"
-            android:text="Volume : "
+            android:text="Volume"
+            android:textSize="10sp"
             android:onClick="@{() -> viewmodel.sortByVolume()}"
             android:singleLine="true"
-            app:layout_constraintLeft_toRightOf="@id/layout_price_percent_change"
+            android:textColor="@{(viewmodel.currentSorting == Sorting.VolumeAscending || viewmodel.currentSorting == Sorting.VolumeDescending) ? @color/black : @color/ltgray }"
+            app:icon="@{viewmodel.currentSorting == Sorting.VolumeAscending ? @drawable/icon_sort_ascending : (viewmodel.currentSorting == Sorting.VolumeDescending ? @drawable/icon_sort_descending : @drawable/icon_sort_default)}"
             app:layout_constraintRight_toRightOf="@id/instrument_list"
             app:layout_constraintTop_toTopOf="@id/symbols_sort"
             app:layout_constraintBottom_toBottomOf="@id/layout_price_percent_change"/>

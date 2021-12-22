@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         binding.viewmodel = viewmodel
-        binding.lifecycleOwner = this
         setContentView(binding.root)
 
         //setSupportActionBar(binding.toolbar)
