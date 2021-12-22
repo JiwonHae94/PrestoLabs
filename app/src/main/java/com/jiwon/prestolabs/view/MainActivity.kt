@@ -27,9 +27,6 @@ class MainActivity : AppCompatActivity() {
         binding.viewmodel = viewmodel
         setContentView(binding.root)
 
-        //setSupportActionBar(binding.toolbar)
-
-
         if(savedInstanceState == null){
             supportFragmentManager.commit{
                 setReorderingAllowed(true)
