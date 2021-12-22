@@ -41,7 +41,7 @@ object QuickSort {
                 left++
             }
 
-            while (comparator.compare(array[left], pivot) > 0) {
+            while (comparator.compare(array[right], pivot) > 0) {
                 right--
             }
 

@@ -1,11 +1,18 @@
 package com.jiwon.prestolabs.repository
 
 import android.util.Log
+import androidx.databinding.ObservableDouble
+import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
+import androidx.databinding.ObservableLong
 import com.google.gson.GsonBuilder
 import com.jiwon.prestolabs.api.WebSocket
 import com.jiwon.prestolabs.model.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.random.Random
 
 class InstrumentRepository {
     private val TAG = InstrumentRepository::class.java.simpleName
@@ -80,28 +87,20 @@ class InstrumentRepository {
         const val Partial = "partial"
         const val Data = "data"
 
-//        fun getDummyData() = InstrumentMap().apply{
-//            put(Instrument(symbol = "A", state = InstrumentState.Open, lastPrice = Random.nextInt(0, 10000000), isInverse = false, lastChangePercentage = Random.nextDouble(-100.0, 100.0), volume24 = Random.nextLong(0, 10000000)))
-//            put(Instrument(symbol = "B", state = InstrumentState.Open, lastPrice = Random.nextInt(0, 10000000), isInverse = true, lastChangePercentage = Random.nextDouble(-100.0, 100.0), volume24 = Random.nextLong(0, 10000000)))
-//            put(Instrument(symbol = "C", state = InstrumentState.Open, lastPrice = Random.nextInt(0, 10000000), isInverse = false, lastChangePercentage = Random.nextDouble(-100.0, 100.0), volume24 = Random.nextLong(0, 100000000000)))
-//            put(Instrument(symbol = "D", state = InstrumentState.Open, lastPrice = Random.nextInt(0, 10000000), isInverse = false, lastChangePercentage = Random.nextDouble(-100.0, 100.0), volume24 = Random.nextLong(0, 10000000)))
-//            put(Instrument(symbol = "E", state = InstrumentState.Open, lastPrice = Random.nextInt(0, 10000000), isInverse = true, lastChangePercentage = Random.nextDouble(-100.0, 100.0), volume24 = Random.nextLong(0, 100000000000)))
-//            put(Instrument(symbol = "F", state = InstrumentState.Open, lastPrice = Random.nextInt(0, 10000000), isInverse = false, lastChangePercentage = Random.nextDouble(-100.0, 100.0), volume24 = Random.nextLong(0, 10000)))
-//            put(Instrument(symbol = "G", state = InstrumentState.Open, lastPrice = Random.nextInt(0, 10000000), isInverse = false, lastChangePercentage = Random.nextDouble(-100.0, 100.0), volume24 = Random.nextLong(0, 1000)))
-//            put(Instrument(symbol = "H", state = InstrumentState.Open, lastPrice = Random.nextInt(0, 10000000), isInverse = false, lastChangePercentage = Random.nextDouble(-100.0, 100.0), volume24 = Random.nextLong(0, 100000000000)))
-//            put(Instrument(symbol = "I", state = InstrumentState.Open, lastPrice = Random.nextInt(0, 10000000), isInverse = false, lastChangePercentage = Random.nextDouble(-100.0, 100.0), volume24 = Random.nextLong(0, 100000000000)))
-//            put(Instrument(symbol = "J", state = InstrumentState.Open, lastPrice = Random.nextInt(0, 10000000), isInverse = false, lastChangePercentage = Random.nextDouble(-100.0, 100.0), volume24 = Random.nextLong(0, 10000000)))
-//            put(Instrument(symbol = "K", state = InstrumentState.Open, lastPrice = Random.nextInt(0, 10000000), isInverse = false, lastChangePercentage = Random.nextDouble(-100.0, 100.0), volume24 = Random.nextLong(0, 100000000000)))
-//            put(Instrument(symbol = "L", state = InstrumentState.Open, lastPrice = Random.nextInt(0, 10000000), isInverse = false, lastChangePercentage = Random.nextDouble(-100.0, 100.0), volume24 = Random.nextLong(0, 10000000)))
-//            put(Instrument(symbol = "M", state = InstrumentState.Open, lastPrice = Random.nextInt(0, 10000000), isInverse = false, lastChangePercentage = Random.nextDouble(-100.0, 100.0), volume24 = Random.nextLong(0, 100000000000)))
-//            put(Instrument(symbol = "N", state = InstrumentState.Open, lastPrice = Random.nextInt(0, 10000000), isInverse = true, lastChangePercentage = Random.nextDouble(-100.0, 100.0), volume24 = Random.nextLong(0, 100000000000)))
-//            put(Instrument(symbol = "O", state = InstrumentState.Open, lastPrice = Random.nextInt(0, 10000000), isInverse = false, lastChangePercentage = Random.nextDouble(-100.0, 100.0), volume24 = Random.nextLong(0, 10000000)))
-//            put(Instrument(symbol = "P", state = InstrumentState.Open, lastPrice = Random.nextInt(0, 10000000), isInverse = false, lastChangePercentage = Random.nextDouble(-100.0, 100.0), volume24 = Random.nextLong(0, 10000)))
-//            put(Instrument(symbol = "Q", state = InstrumentState.Open, lastPrice = Random.nextInt(0, 10000000), isInverse = false, lastChangePercentage = Random.nextDouble(-100.0, 100.0), volume24 = Random.nextLong(0, 100000000)))
-//            put(Instrument(symbol = "R", state = InstrumentState.Open, lastPrice = Random.nextInt(0, 10000000), isInverse = false, lastChangePercentage = Random.nextDouble(-100.0, 100.0), volume24 = Random.nextLong(0, 1000000)))
-//            put(Instrument(symbol = "S", state = InstrumentState.Open, lastPrice = Random.nextInt(0, 10000000), isInverse = false, lastChangePercentage = Random.nextDouble(-100.0, 100.0), volume24 = Random.nextLong(0, 10000)))
-//            put(Instrument(symbol = "T", state = InstrumentState.Open, lastPrice = Random.nextInt(0, 10000000), isInverse = false, lastChangePercentage = Random.nextDouble(-100.0, 100.0), volume24 = Random.nextLong(0, 100)))
-//        }
+        fun getDummyData() = InstrumentMap().apply {
+            for (i in 0 until 3000) {
+                put(
+                    Instrument(
+                        symbol = ObservableField(i.toString()),
+                        state = InstrumentState.Open,
+                        lastPrice = ObservableInt(Random.nextInt(0, 10000000)),
+                        isInverse = false,
+                        lastChangePercentage = ObservableDouble(Random.nextDouble(-100.0, 100.0)),
+                        volume24 = ObservableLong(Random.nextLong(0, 10000000))
+                    )
+                )
+            }
+        }
     }
 
 }
