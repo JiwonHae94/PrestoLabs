@@ -4,14 +4,15 @@ import androidx.databinding.*
 
 class InstrumentMap : HashMap<String, Instrument>(), ObservableMap<String, Instrument> {
     enum class Sorting{
-        PriceDecending,
+        None,
+        PriceDescending,
         PriceAscending,
-        ChangeAsending,
-        ChangeDesencding,
+        PercentChangeAscending,
+        PercentChangeDescending,
         SymbolAscending,
-        SymbolDecending,
+        SymbolDescending,
         VolumeAscending,
-        VolumeDeceding
+        VolumeDescending
     }
 
     private val mapChangeRegistry = MapChangeRegistry()

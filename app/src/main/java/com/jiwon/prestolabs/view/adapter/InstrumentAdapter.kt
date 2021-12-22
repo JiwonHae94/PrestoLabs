@@ -1,7 +1,6 @@
 package com.jiwon.prestolabs.view.adapter
 
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,22 +24,22 @@ class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.ViewHolder>(){
     private var currentComparator = Instrument.SymbolComparator
     private var isReverse = false
 
-    fun updateCompator(sorting : InstrumentMap.Sorting){
+    fun updateSorting(sorting : InstrumentMap.Sorting){
         // update current comparator
         currentComparator = when(sorting){
             InstrumentMap.Sorting.PriceAscending -> {
                 isReverse = false
                 Instrument.PriceComparator
             }
-            InstrumentMap.Sorting.PriceDecending -> {
+            InstrumentMap.Sorting.PriceDescending -> {
                 isReverse = true
                 Instrument.PriceComparator
             }
-            InstrumentMap.Sorting.ChangeAsending -> {
+            InstrumentMap.Sorting.PercentChangeAscending -> {
                 isReverse = false
                 Instrument.PercentageChangeCompator
             }
-            InstrumentMap.Sorting.ChangeDesencding -> {
+            InstrumentMap.Sorting.PercentChangeDescending -> {
                 isReverse = true
                 Instrument.PercentageChangeCompator
             }
@@ -48,7 +47,7 @@ class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.ViewHolder>(){
                 isReverse = false
                 Instrument.Volume24Compator
             }
-            InstrumentMap.Sorting.VolumeDeceding -> {
+            InstrumentMap.Sorting.VolumeDescending -> {
                 isReverse = true
                 Instrument.Volume24Compator
             }
@@ -57,8 +56,13 @@ class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.ViewHolder>(){
                 isReverse = false
                 Instrument.SymbolComparator
             }
-            InstrumentMap.Sorting.SymbolDecending -> {
+            InstrumentMap.Sorting.SymbolDescending -> {
                 isReverse = true
+                Instrument.SymbolComparator
+            }
+            else -> {
+                // Default is None
+                isReverse = false
                 Instrument.SymbolComparator
             }
         }

@@ -16,9 +16,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-//    // lifecycle registry to handle socket connection
-//    private lateinit var lifecycleRegistry: LifecycleRegistry
-
     // UI binding to reference binding
     private lateinit var binding : ActivityMainBinding
 
@@ -27,7 +24,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        binding.viewmodel = viewmodel
+        binding.lifecycleOwner = this
         setContentView(binding.root)
+
+        //setSupportActionBar(binding.toolbar)
+
 
         if(savedInstanceState == null){
             supportFragmentManager.commit{
