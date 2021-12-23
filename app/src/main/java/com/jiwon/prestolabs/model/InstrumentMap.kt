@@ -29,6 +29,8 @@ class InstrumentMap : ConcurrentHashMap<String, Instrument>(), ObservableMap<Str
 
     override fun clear() {
         val wasEmpty = isEmpty()
+
+        // notify change only if clearing acutally occur
         if(!wasEmpty){
             super.clear()
             notifyChange(null)
@@ -74,25 +76,11 @@ class InstrumentMap : ConcurrentHashMap<String, Instrument>(), ObservableMap<Str
         return value
     }
 
-    @Synchronized
-    internal fun updateAll(var1 : Array<InstrumentUpdate>){
-        val iterator = var1.iterator()
-        iterator.forEachRemaining {
-            update(it)
-        }
-        notifyChange(null)
-    }
-
-
-    @Synchronized
     internal fun update(var1 : InstrumentUpdate) : Instrument?{
         val value = get(var1.symbol)
 
         // return if item is not valid
         value ?: return null
-
-        Log.d("Instruments", "log map update : ${value}")
-
 
         var1.volume24?.let{
             value.volume24.set(it)
@@ -108,6 +96,15 @@ class InstrumentMap : ConcurrentHashMap<String, Instrument>(), ObservableMap<Str
 
         notifyChange(value.symbol.get())
         return value
+    }
+
+    @Synchronized
+    internal fun updateAll(var1 : Array<InstrumentUpdate>){
+        val iterator = var1.iterator()
+        iterator.forEachRemaining {
+            update(it)
+        }
+        notifyChange(null)
     }
 
     internal fun get(value : Instrument) : Instrument?{
