@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind ="http://schemas.android.com/apk/tools">
+
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.jiwon.prestolabs.viewmodel.MainViewModel" />
+
+        <import type="android.view.View"/>
+        <import type="com.jiwon.prestolabs.model.InstrumentMap" />
+        <import type="com.jiwon.prestolabs.model.InstrumentMap.Sorting" />
+        <variable
+            name="instruments"
+            type="InstrumentMap" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/search_symbol_edittext"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/border_background"
+            android:enabled="false"
+            android:hint="Search Symbol"
+            android:drawablePadding="10sp"
+            android:drawableStart="@drawable/ic_search"
+            android:drawableTint="@color/ltgray"
+            android:gravity="center_vertical"
+            android:textSize="12sp"
+            android:textColorHint="@color/ltgray"
+            app:layout_constraintLeft_toLeftOf="@id/instrument_list"
+            app:layout_constraintRight_toRightOf="@id/instrument_list"
+            app:layout_constraintHeight_percent="0.08"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Theme.PrestoLabs.SortButton"
+            android:id="@+id/symbols_sort"
+            android:layout_height="0dp"
+            android:layout_width="wrap_content"
+            android:textColor="@{(viewmodel.currentSorting == Sorting.SymbolAscending || viewmodel.currentSorting == Sorting.SymbolDescending) ?  @color/black : @color/ltgray }"
+            android:text="Symbols"
+            android:onClick="@{() -> viewmodel.sortBySymbol()}"
+            app:icon="@{(viewmodel.currentSorting == Sorting.SymbolAscending) ? @drawable/ic_sort_ascending : ((viewmodel.currentSorting == Sorting.SymbolDescending) ? @drawable/ic_sort_descending : @drawable/ic_sort_default)}"
+            app:layout_constraintHeight_percent="0.07"
+            app:layout_constraintLeft_toLeftOf="@id/instrument_list"
+            app:layout_constraintTop_toBottomOf="@id/search_symbol_edittext"/>
+
+        <LinearLayout
+            android:id="@+id/layout_price_percent_change"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintLeft_toLeftOf="@id/symbols_sort"
+            app:layout_constraintRight_toRightOf="parent"
+            app:flow_horizontalBias="0.5"
+            app:layout_constraintTop_toTopOf="@id/symbols_sort"
+            app:layout_constraintBottom_toBottomOf="@id/symbols_sort">
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Theme.PrestoLabs.SortButton"
+                android:id="@+id/price_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Price"
+                android:textSize="10sp"
+                android:textColor="@{(viewmodel.currentSorting == Sorting.PriceAscending || viewmodel.currentSorting == Sorting.PriceDescending) ? @color/black : @color/ltgray }"
+                android:onClick="@{() -> viewmodel.sortByPrice()}"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text=" / "/>
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Theme.PrestoLabs.SortButton"
+                android:id="@+id/percent_change_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@{(viewmodel.currentSorting == Sorting.PercentChangeAscending || viewmodel.currentSorting == Sorting.PercentChangeDescending) ?  @color/black : @color/ltgray }"
+                android:text="Change"
+                android:onClick="@{() -> viewmodel.sortByPercentChange()}"/>
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Theme.PrestoLabs.SortButton"
+                android:text=""
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:enabled="false"
+                android:clickable="false"
+                app:iconGravity="start"
+                app:icon="@{viewmodel.currentSorting == Sorting.PercentChangeAscending || viewmodel.currentSorting == Sorting.PriceAscending ? @drawable/ic_sort_ascending : viewmodel.currentSorting == Sorting.PercentChangeDescending || viewmodel.currentSorting == Sorting.PriceDescending ? @drawable/ic_sort_descending : @drawable/ic_sort_default}"/>
+        </LinearLayout>
+
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Theme.PrestoLabs.SortButton"
+            android:id="@+id/volume_sort"
+            android:backgroundTint="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="Volume"
+            android:onClick="@{() -> viewmodel.sortByVolume()}"
+            android:textColor="@{(viewmodel.currentSorting == Sorting.VolumeAscending || viewmodel.currentSorting == Sorting.VolumeDescending) ? @color/black : @color/ltgray }"
+            app:icon="@{viewmodel.currentSorting == Sorting.VolumeAscending ? @drawable/ic_sort_ascending : (viewmodel.currentSorting == Sorting.VolumeDescending ? @drawable/ic_sort_descending : @drawable/ic_sort_default)}"
+            app:layout_constraintRight_toRightOf="@id/instrument_list"
+            app:layout_constraintTop_toTopOf="@id/symbols_sort"
+            app:layout_constraintBottom_toBottomOf="@id/layout_price_percent_change"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/instrument_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            bind:items="@{instruments}"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintWidth_percent="0.9"
+            app:layout_constraintTop_toBottomOf="@id/symbols_sort"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <include
+            android:id="@+id/instrument_loading"
+            layout="@layout/instrument_loading_view"
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            app:layout_constraintTop_toTopOf="@id/instrument_list"
+            app:layout_constraintBottom_toBottomOf="@id/instrument_list"
+            app:layout_constraintLeft_toLeftOf="@id/instrument_list"
+            app:layout_constraintRight_toRightOf="@id/instrument_list"
+            bind:instruments = "@{instruments}"/>
+
+
+        <View
+            style="@style/Divider"
+            android:layout_width="0dp"
+            app:layout_constraintRight_toRightOf="@id/instrument_list"
+            app:layout_constraintLeft_toLeftOf="@id/instrument_list"
+            app:layout_constraintTop_toTopOf="@id/instrument_list"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
