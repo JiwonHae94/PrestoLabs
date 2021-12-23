@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil.load
 import com.jiwon.prestolabs.R
 import com.jiwon.prestolabs.databinding.MainFragmentBinding
 import com.jiwon.prestolabs.view.adapter.InstrumentAdapter
