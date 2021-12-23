@@ -37,26 +37,18 @@ class MainViewModel @Inject constructor(
         currentSorting.postValue(sorting)
     }
 
-    fun sortByPrice(){
-        // check whether current sorting is either price ascending or descending
+    fun sortByPricePercentChange(){
+        // check whether current sorting is either percent change ascending or descending
         val sorting = when(currentSorting.value ?: InstrumentMap.Sorting.None){
-            InstrumentMap.Sorting.PriceAscending -> InstrumentMap.Sorting.PriceDescending
+
+            // which sorting in the order of price decending -> price ascending -> change descending -> change ascending
             InstrumentMap.Sorting.PriceDescending -> InstrumentMap.Sorting.PriceAscending
+            InstrumentMap.Sorting.PriceAscending -> InstrumentMap.Sorting.PercentChangeDescending
+            InstrumentMap.Sorting.PercentChangeDescending -> InstrumentMap.Sorting.PercentChangeAscending
+            InstrumentMap.Sorting.PercentChangeAscending -> InstrumentMap.Sorting.PriceDescending
 
             // if otherwise apply price ascending
             else -> InstrumentMap.Sorting.PriceDescending
-        }
-        updateSorting(sorting)
-    }
-
-    fun sortByPercentChange(){
-        // check whether current sorting is either percent change ascending or descending
-        val sorting = when(currentSorting.value ?: InstrumentMap.Sorting.None){
-            InstrumentMap.Sorting.PercentChangeAscending -> InstrumentMap.Sorting.PercentChangeDescending
-            InstrumentMap.Sorting.PercentChangeDescending -> InstrumentMap.Sorting.PercentChangeAscending
-
-            // if otherwise apply percent ascending
-            else -> InstrumentMap.Sorting.PercentChangeDescending
         }
         updateSorting(sorting)
     }
