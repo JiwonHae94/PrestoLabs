@@ -13,6 +13,7 @@ class PrestoLabs : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        // add gif image loader to coil image loader
         val imageLoader = ImageLoader.Builder(this)
             .componentRegistry {
                 if (Build.VERSION.SDK_INT >= 28) {

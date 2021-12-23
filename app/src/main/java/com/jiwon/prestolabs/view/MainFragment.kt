@@ -51,10 +51,10 @@ class MainFragment : Fragment(R.layout.main_fragment) {
             DividerItemDecoration(binding.instrumentList.context, layoutManager.orientation)
         )
         binding.instrumentLoading.image.load(R.drawable.ic_loading)
-        observeCHangesToSorting()
+        observeChangesToSorting()
     }
 
-    fun observeCHangesToSorting(){
+    fun observeChangesToSorting(){
         viewmodel.currentSorting.observe(this){ sorting ->
             instrumentAdapter.updateSorting(sorting)
         }
