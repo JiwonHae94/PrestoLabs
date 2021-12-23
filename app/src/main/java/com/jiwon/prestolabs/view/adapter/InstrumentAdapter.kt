@@ -1,6 +1,7 @@
 package com.jiwon.prestolabs.view.adapter
 
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.jiwon.prestolabs.databinding.InstrumentItemViewBinding
 import com.jiwon.prestolabs.databinding.InstrumentLoadingViewBinding
 import com.jiwon.prestolabs.model.Instrument
 import com.jiwon.prestolabs.model.InstrumentMap
+import com.jiwon.prestolabs.model.helper.QuickSort.quickSortedWith
 import java.text.DecimalFormat
 
 class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.ViewHolder>(){
@@ -62,12 +64,12 @@ class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.ViewHolder>(){
             }
             else -> {
                 // Default is None
-                isReverse = false
-                Instrument.SymbolComparator
+                isReverse = true
+                Instrument.Volume24Compator
             }
         }
 
-        this.instruments = instruments.sortedWith(currentComparator).toTypedArray()
+        this.instruments = instruments.quickSortedWith(currentComparator).toTypedArray()
         if(isReverse)
             instruments.reverse()
 
@@ -100,22 +102,15 @@ class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.ViewHolder>(){
         }
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return if (viewType == InstrumentLoading) {
-            LoadingViewHolder(parent)
-        } else {
-            ItemViewHolder(parent)
-        }
+        return ItemViewHolder(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if(holder is ItemViewHolder && instruments.size > position){
             holder.bind(instruments.get(position))
         }
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return if(instruments.isEmpty()) InstrumentLoading else InstrumentLoaded
     }
 
     override fun getItemCount(): Int {
@@ -129,7 +124,7 @@ class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.ViewHolder>(){
     fun update(items : Array<Instrument>){
 
         // set target instruments
-        this.instruments = items.sortedWith(currentComparator).toTypedArray()
+        this.instruments = items.quickSortedWith(currentComparator).toTypedArray()
         if(isReverse){
             instruments.reverse()
         }

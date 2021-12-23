@@ -15,11 +15,23 @@
         tools:context=".view.MainActivity">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/action_bar"
+            android:background="@drawable/border_actionbar"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.1"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:layout_height="wrap_content"
+            app:logo="@drawable/logo"
+            app:layout_constraintHeight_percent="0.05"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="3sp"
+                android:adjustViewBounds="true"
+                android:layout_gravity="right|center_vertical"
+                android:src="@mipmap/hamburger"/>
+
+        </androidx.appcompat.widget.Toolbar>
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/main_fragment_container"
@@ -27,7 +39,7 @@
             android:layout_height="0dp"
             app:navigationIcon="@drawable/hamburger_foreground"
             app:layout_constraintHeight_percent="0.9"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintTop_toBottomOf="@id/action_bar"
             android:name="com.jiwon.prestolabs.view.MainFragment" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

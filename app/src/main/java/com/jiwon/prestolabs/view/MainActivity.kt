@@ -29,6 +29,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         binding.viewmodel = viewmodel
+
+        // set action custom action bar
+        binding.actionBar.overflowIcon = getDrawable(R.mipmap.hamburger)
+        setSupportActionBar(binding.actionBar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
         setContentView(binding.root)
 
         if(savedInstanceState == null){
@@ -37,18 +43,7 @@ class MainActivity : AppCompatActivity() {
                 add<MainFragment>(R.id.main_fragment_container)
             }
         }
-        test()
     }
 
-    fun test(){
-        val data = InstrumentRepository.getDummyData().values.toTypedArray()
-        val sortedData = data.sortedWith(Instrument.SymbolComparator)
-        val quickSortedData = data.quickSortedWith(Instrument.SymbolComparator)
 
-        for(i in 0 until data.size){
-            Log.d("QuickSortTEST",
-                "sort : ${sortedData.get(i)} <====> quick sort : ${quickSortedData.get(i)}"
-            )
-        }
-    }
 }

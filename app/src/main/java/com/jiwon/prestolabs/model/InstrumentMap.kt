@@ -1,8 +1,10 @@
 package com.jiwon.prestolabs.model
 
+import android.util.Log
 import androidx.databinding.*
+import java.util.concurrent.ConcurrentHashMap
 
-class InstrumentMap : HashMap<String, Instrument>(), ObservableMap<String, Instrument> {
+class InstrumentMap : ConcurrentHashMap<String, Instrument>(), ObservableMap<String, Instrument> {
     enum class Sorting{
         None,
         PriceDescending,
@@ -39,6 +41,8 @@ class InstrumentMap : HashMap<String, Instrument>(), ObservableMap<String, Instr
 
     override fun put(key: String?, value: Instrument): Instrument? {
         key?: return null
+
+        // return null if instrument is not open or is inverse
         if(value.state != InstrumentState.Open || value.isInverse) return null
 
         val value = super.put(key, value)
@@ -47,13 +51,13 @@ class InstrumentMap : HashMap<String, Instrument>(), ObservableMap<String, Instr
     }
 
     override fun remove(key: String): Instrument? {
-        val value = super<HashMap>.remove(key)
+        val value = super<ConcurrentHashMap>.remove(key)
         notifyChange(key)
         return value
     }
 
     override fun remove(key: String, value: Instrument): Boolean {
-        val value = super<java.util.HashMap>.remove(key, value)
+        val value = super<ConcurrentHashMap>.remove(key, value)
         notifyChange(key)
         return value
     }
@@ -83,7 +87,12 @@ class InstrumentMap : HashMap<String, Instrument>(), ObservableMap<String, Instr
     @Synchronized
     internal fun update(var1 : InstrumentUpdate) : Instrument?{
         val value = get(var1.symbol)
+
+        // return if item is not valid
         value ?: return null
+
+        Log.d("Instruments", "log map update : ${value}")
+
 
         var1.volume24?.let{
             value.volume24.set(it)

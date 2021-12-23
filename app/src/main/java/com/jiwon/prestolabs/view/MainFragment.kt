@@ -46,7 +46,10 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         val layoutManager = LinearLayoutManager(view.context)
         binding.instrumentList.layoutManager = layoutManager
         binding.instrumentList.adapter = instrumentAdapter
-        binding.instrumentList.addItemDecoration(DividerItemDecoration(view.context, layoutManager.orientation))
+        binding.instrumentList.addItemDecoration(
+            DividerItemDecoration(binding.instrumentList.context, layoutManager.orientation)
+        )
+        binding.instrumentLoading.image.load(R.drawable.ic_loading)
         observeCHangesToSorting()
     }
 

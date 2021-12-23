@@ -12,7 +12,8 @@
         android:theme="@style/Theme.PrestoLabs">
         <activity
             android:name=".view.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

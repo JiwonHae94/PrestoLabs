@@ -20,6 +20,9 @@ class InstrumentParser : JsonDeserializer<Instrument?> {
         // convert json as JSONObject
         val jsonObject = json.asJsonObject
 
+
+        Log.d("Instrument map", "log value : ${jsonObject.toString()}")
+
         // get parse information from the data and instatiate an instrument class
         return try{
             Instrument(
@@ -51,6 +54,8 @@ class InstrumentUpdateParser : JsonDeserializer<InstrumentUpdate?>{
     ): InstrumentUpdate? {
         // convert json as JSONObject
         val jsonObject = json.asJsonObject
+
+        Log.d("Instrument map", "log value update : ${jsonObject.toString()}")
 
         // get parse information from the data and instatiate an instrument class
         return try{

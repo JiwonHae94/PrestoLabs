@@ -28,7 +28,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    val currentSorting = MutableLiveData(InstrumentMap.Sorting.None)
+    val currentSorting = MutableLiveData(InstrumentMap.Sorting.VolumeDescending)
 
     fun updateSorting(
         sorting : InstrumentMap.Sorting
@@ -44,7 +44,7 @@ class MainViewModel @Inject constructor(
             InstrumentMap.Sorting.PriceDescending -> InstrumentMap.Sorting.PriceAscending
 
             // if otherwise apply price ascending
-            else -> InstrumentMap.Sorting.PriceAscending
+            else -> InstrumentMap.Sorting.PriceDescending
         }
         updateSorting(sorting)
     }
@@ -56,7 +56,7 @@ class MainViewModel @Inject constructor(
             InstrumentMap.Sorting.PercentChangeDescending -> InstrumentMap.Sorting.PercentChangeAscending
 
             // if otherwise apply percent ascending
-            else -> InstrumentMap.Sorting.PercentChangeAscending
+            else -> InstrumentMap.Sorting.PercentChangeDescending
         }
         updateSorting(sorting)
     }
@@ -68,7 +68,7 @@ class MainViewModel @Inject constructor(
             InstrumentMap.Sorting.VolumeDescending -> InstrumentMap.Sorting.VolumeAscending
 
             // if otherwise apply percent ascending
-            else -> InstrumentMap.Sorting.VolumeAscending
+            else -> InstrumentMap.Sorting.VolumeDescending
         }
         updateSorting(sorting)
     }
@@ -80,7 +80,7 @@ class MainViewModel @Inject constructor(
             InstrumentMap.Sorting.SymbolDescending -> InstrumentMap.Sorting.SymbolAscending
 
             // if otherwise apply symbol ascending
-            else -> InstrumentMap.Sorting.SymbolAscending
+            else -> InstrumentMap.Sorting.SymbolDescending
         }
         updateSorting(sorting)
     }

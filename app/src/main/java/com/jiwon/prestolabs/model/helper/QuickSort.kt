@@ -23,7 +23,6 @@ object QuickSort {
         if (index < right) {
             qsort(array, comparator, index, right)
         }
-
     }
 
     private fun <T> partition(

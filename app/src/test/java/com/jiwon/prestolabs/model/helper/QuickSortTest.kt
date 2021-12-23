@@ -1,5 +1,6 @@
 package com.jiwon.prestolabs.model.helper
 
+import android.util.Log
 import com.jiwon.prestolabs.model.Instrument.Companion.PercentageChangeCompator
 import com.jiwon.prestolabs.model.Instrument.Companion.PriceComparator
 import com.jiwon.prestolabs.model.Instrument.Companion.SymbolComparator
@@ -7,6 +8,7 @@ import com.jiwon.prestolabs.model.Instrument.Companion.Volume24Compator
 import com.jiwon.prestolabs.model.helper.QuickSort.quickSortedWith
 import com.jiwon.prestolabs.repository.InstrumentRepository.Companion.getDummyData
 import org.junit.Test
+import java.util.logging.Logger
 
 class QuickSortTest{
 
@@ -30,7 +32,11 @@ class QuickSortTest{
 //                "sort : ${sortedData.get(i)} <====> quick sort : ${quickSortedData.get(i)}"
 //            )
 
-            assert(sortedData[i].symbol.equals(quickSortedData[i].symbol))
+            val isSame = sortedData[i].symbol.get().equals(quickSortedData[i].symbol.get())
+            if(!isSame){
+                println("symbol compared original : ${sortedData[i].symbol} ==== implemented ${quickSortedData[i].symbol}")
+            }
+            assert(isSame)
         }
     }
     @Test
@@ -52,7 +58,14 @@ class QuickSortTest{
 //                "sort : ${sortedData.get(i)} <====> quick sort : ${quickSortedData.get(i)}"
 //            )
 
-            assert(sortedData[i].symbol.equals(quickSortedData[i].symbol))
+
+            val isSame = sortedData[i].symbol.equals(quickSortedData[i].symbol)
+                    || sortedData[i].lastPrice.get() == quickSortedData[i].lastPrice.get()
+            if(!isSame){
+                println("price compared original : ${sortedData[i].symbol.get()}, ${sortedData[i].lastPrice.get()} ==== implemented ${quickSortedData[i].symbol.get()}, ${quickSortedData[i].lastPrice.get()}")
+            }
+            assert(isSame)
+
         }
     }
 
@@ -76,7 +89,13 @@ class QuickSortTest{
 //            println(
 //                "sort : ${sortedData.get(i)} <====> quick sort : ${quickSortedData.get(i)}"
 //            )
-            assert(sortedData[i].symbol.equals(quickSortedData[i].symbol))
+
+            val isSame = sortedData[i].symbol.get().equals(quickSortedData[i].symbol.get())
+                    || sortedData[i].lastChangePercentage.get() == quickSortedData[i].lastChangePercentage.get()
+            if(!isSame){
+                println("lastChangePercentage compared original : ${sortedData[i].symbol}, ${sortedData[i].lastChangePercentage} ==== implemented ${quickSortedData[i].symbol}, ${quickSortedData[i].lastChangePercentage}")
+            }
+            assert(isSame)
         }
     }
 
@@ -99,7 +118,14 @@ class QuickSortTest{
 //            println(
 //                "sort : ${sortedData.get(i)} <====> quick sort : ${quickSortedData.get(i)}"
 //            )
-            assert(sortedData[i].symbol.equals(quickSortedData[i].symbol))
+
+
+            val isSame = sortedData[i].symbol.get().equals(quickSortedData[i].symbol.get())
+                    || sortedData[i].volume24.get() == quickSortedData[i].volume24.get()
+            if(!isSame){
+                println("volume24 compared : original : ${sortedData[i].symbol.get()}, ${sortedData[i].lastChangePercentage.get()} ==== implemented ${quickSortedData[i].symbol.get()}, ${quickSortedData[i].lastChangePercentage.get()}")
+            }
+            assert(isSame)
         }
     }
 }

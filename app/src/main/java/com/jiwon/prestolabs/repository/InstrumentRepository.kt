@@ -88,7 +88,7 @@ class InstrumentRepository {
         const val Data = "data"
 
         fun getDummyData() = InstrumentMap().apply {
-            for (i in 0 until 3000) {
+            for (i in 0 until 50000) {
                 put(
                     Instrument(
                         symbol = ObservableField(i.toString()),
