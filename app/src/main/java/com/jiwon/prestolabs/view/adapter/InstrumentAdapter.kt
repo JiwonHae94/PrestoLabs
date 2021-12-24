@@ -15,7 +15,6 @@ import com.jiwon.prestolabs.databinding.InstrumentItemViewBinding
 import com.jiwon.prestolabs.databinding.InstrumentLoadingViewBinding
 import com.jiwon.prestolabs.model.Instrument
 import com.jiwon.prestolabs.model.InstrumentMap
-import com.jiwon.prestolabs.model.helper.QuickSort.quickSortedWith
 import java.text.DecimalFormat
 
 class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.ViewHolder>(){
@@ -69,7 +68,7 @@ class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.ViewHolder>(){
             }
         }
 
-        this.instruments = instruments.quickSortedWith(currentComparator).toTypedArray()
+        this.instruments = instruments.sortedWith(currentComparator).toTypedArray()
         if(isReverse)
             instruments.reverse()
 
@@ -124,7 +123,7 @@ class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.ViewHolder>(){
     fun update(items : Array<Instrument>){
 
         // set target instruments
-        this.instruments = items.quickSortedWith(currentComparator).toTypedArray()
+        this.instruments = items.sortedWith(currentComparator).toTypedArray()
         if(isReverse){
             instruments.reverse()
         }
