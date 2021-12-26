@@ -61,9 +61,10 @@
             android:gravity="center"
             android:background="@color/white"
             android:onClick="@{() -> viewmodel.sortByPricePercentChange()}"
-            app:layout_constraintLeft_toLeftOf="@id/symbols_sort"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintHorizontal_bias="0.65"
+            app:layout_constraintWidth_percent="0.9"
+            app:layout_constraintHorizontal_bias="0.6"
             app:layout_constraintTop_toTopOf="@id/symbols_sort"
             app:layout_constraintBottom_toBottomOf="@id/symbols_sort">
 

@@ -18,9 +18,10 @@ class WebSocket {
         .build()
 
     fun openConnection(
-        onMessageReceived : (String) -> Unit
+        onMessageReceived : (String) -> Unit,
+        onConnectionStatusChanged: (isConnected: Boolean) -> Unit
     ){
-        client.newWebSocket(request, SocketListener(onMessageReceived))
+        client.newWebSocket(request, SocketListener(onMessageReceived, onConnectionStatusChanged))
     }
 
     fun closeConnection(){
@@ -28,7 +29,8 @@ class WebSocket {
     }
 
     class SocketListener(
-        val onMessageReceived : (String) -> Unit
+        val onMessageReceived : (String) -> Unit,
+        val onConnectionStatusChanged : (isConnected : Boolean) -> Unit
     ) : WebSocketListener(){
         private val TAG = WebSocket::class.java.simpleName
 
@@ -49,6 +51,9 @@ class WebSocket {
         override fun onOpen(webSocket: WebSocket, response: Response) {
             super.onOpen(webSocket, response)
 
+            onConnectionStatusChanged(true)
+
+
             // send subscription message back to the socket upon connection
             val jsonObject = JSONObject()
             jsonObject.put("op", "subscribe")
@@ -61,6 +66,7 @@ class WebSocket {
 
         override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
             Log.i(TAG,"Closed : $code / $reason")
+            onConnectionStatusChanged(false)
         }
 
         override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {

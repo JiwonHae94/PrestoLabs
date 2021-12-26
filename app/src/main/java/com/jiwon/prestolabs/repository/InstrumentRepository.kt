@@ -21,14 +21,18 @@ class InstrumentRepository {
 
     var instrumentMap : InstrumentMap? = null
 
+    private var isSocketConnected = false
+
     private val gsonDecoder = GsonBuilder()
         .registerTypeAdapter(Instrument::class.java, InstrumentParser())
         .registerTypeAdapter(InstrumentUpdate::class.java, InstrumentUpdateParser())
         .create()
 
     fun startSocket(instruments : InstrumentMap) {
+        if(isSocketConnected) return
+
         this.instrumentMap = instruments
-        webSocket.openConnection(::onMessageReceived)
+        webSocket.openConnection(::onMessageReceived, ::onSocketConnectionChanged)
     }
 
     fun closeSocket() = webSocket.closeConnection()
@@ -59,6 +63,10 @@ class InstrumentRepository {
 
         // update internal values of the instrument
         instrumentMap?.updateAll(updateList.toTypedArray())
+    }
+
+    fun onSocketConnectionChanged(isConnected : Boolean){
+        isSocketConnected = isConnected
     }
 
     fun onMessageReceived(

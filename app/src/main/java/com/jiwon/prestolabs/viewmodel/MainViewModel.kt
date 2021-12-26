@@ -72,7 +72,7 @@ class MainViewModel @Inject constructor(
             InstrumentMap.Sorting.SymbolDescending -> InstrumentMap.Sorting.SymbolAscending
 
             // if otherwise apply symbol ascending
-            else -> InstrumentMap.Sorting.SymbolAscending
+            else -> InstrumentMap.Sorting.SymbolDescending
         }
         updateSorting(sorting)
     }

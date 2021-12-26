@@ -3,6 +3,7 @@
     package="com.jiwon.prestolabs">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".PrestoLabs"
@@ -10,6 +11,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.PrestoLabs">
+
         <activity
             android:name=".view.MainActivity"
             android:exported="true"
@@ -17,7 +19,8 @@
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
